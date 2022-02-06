@@ -25,12 +25,8 @@ class Elevania {
       url: `/prodservices/product/details/${id}`,
       method: 'GET',
     });
-    console.log(response);
     const respJSON = JSON.parse(parseXml(response));
-    if (respJSON.ClientMessage) {
-      console.log('find product', respJSON.ClientMessage);
-      return null;
-    }
+    if (respJSON.ClientMessage) return null;
     const product = Elevania.parseOptionalDetail(respJSON.Product);
     return product;
   }

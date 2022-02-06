@@ -11,7 +11,6 @@ class AuthController {
       const { email, password } = req.payload;
       const [user] = await UserService.findOne(['email', email]);
       if (!user) throw customeError(401, 'Wrong Email / Password');
-      console.log(password, user.password);
       const passMatch = CryptoPass.compare(password, user.password);
       if (!passMatch) throw customeError(401, 'Wrong Email / Password');
       const token = JWT.sign({ email: user.email, id: user.id, scope: 'admin' });

@@ -1,4 +1,6 @@
-const ProductController = require('../../../controller/ProductController');
+const Controler = require('../../../controller/ProductController');
+
+const auth = { strategy: 'default', scope: ['admin'] };
 
 /**
  *
@@ -7,12 +9,12 @@ const ProductController = require('../../../controller/ProductController');
  */
 const products = (prefixs) => {
   const routes = [
-    { path: prefixs, method: 'GET', handler: ProductController.index },
-    { path: prefixs, method: 'POST', handler: ProductController.store },
-    { path: `${prefixs}/{id}`, method: 'GET', handler: ProductController.show },
-    { path: `${prefixs}/{id}`, method: 'PUT', handler: ProductController.update },
-    // { path: `${prefixs}/{id}`, method: 'PATCH', handler: ProductController.patch },
-    { path: `${prefixs}/{id}`, method: 'DELETE', handler: ProductController.delete },
+    { path: prefixs, method: 'GET', handler: Controler.index },
+    { path: prefixs, method: 'POST', handler: Controler.store, options: { auth } },
+    { path: `${prefixs}/{id}`, method: 'GET', handler: Controler.show },
+    { path: `${prefixs}/{id}`, method: 'PUT', handler: Controler.update, options: { auth } },
+    { path: `${prefixs}/{id}`, method: 'DELETE', handler: Controler.delete, options: { auth } },
+    // { path: `${prefixs}/{id}`, method: 'PATCH', handler: Controler.patch },
   ];
   return routes;
 };
