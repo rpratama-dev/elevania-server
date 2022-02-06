@@ -29,17 +29,16 @@ const init = async () => {
   //   strategy: 'default',
   //   scope: 'admin',
   // });
-  server.route({
-    method: 'GET',
-    path: '/',
-    options: {
-      auth: { strategy: 'default', mode: 'optional', scope: ['admin', 'customer'] },
-      handler: function (request, h) {
-        return request.auth;
-      },
-    },
-  });
-
+  // server.route({
+  //   method: 'GET',
+  //   path: '/',
+  //   options: {
+  //     auth: { strategy: 'default', mode: 'optional', scope: ['admin', 'customer'] },
+  //     handler: function (request, h) {
+  //       return request.auth;
+  //     },
+  //   },
+  // });
   routes(server);
   await server.start();
   console.log('Server running on port 3000');

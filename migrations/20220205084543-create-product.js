@@ -17,6 +17,7 @@ module.exports = {
       },
       sku: {
         type: Sequelize.STRING,
+        unique: true,
       },
       price: {
         type: Sequelize.INTEGER,

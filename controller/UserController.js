@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-const { default: customeError } = require('../helper/customeError');
+const customeError = require('../helper/customeError');
 const errorHandler = require('../helper/ErrorHandler');
 const UserService = require('../services/UserService');
 const CryptoPass = require('../utils/cryptoPass');
@@ -9,9 +9,12 @@ class UserController {
     try {
       const { full_name, email, password, retype_password } = req.payload;
       if (password !== retype_password) throw customeError(400, 'Password Not Match');
+      const dateCreated = new Date().toISOString();
       const hashPass = CryptoPass.hash(password);
-      const payload = [full_name, email, hashPass, 'admin'];
-      return payload;
+      const payload = [full_name, email, hashPass, 'admin', dateCreated, dateCreated];
+      await UserService.create([payload]);
+      const response = { full_name, email, role: 'admin' };
+      return { response, status: 201 };
     } catch (error) {
       return errorHandler(error);
     }
