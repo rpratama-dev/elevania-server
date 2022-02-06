@@ -6,7 +6,16 @@ const Auth = require('./middleware/Auth');
 const appConfig = require('./config');
 
 const init = async () => {
-  const server = Hapi.server({ port: appConfig.port, host: 'localhost' });
+  const server = Hapi.server({
+    port: appConfig.port,
+    host: 'localhost',
+    routes: {
+      cors: {
+        origin: ['*'],
+        additionalHeaders: ['cache-control', 'access_token', 'x-requested-with'],
+      },
+    },
+  });
 
   const scheme = () => ({ authenticate: Auth.authentication });
   server.auth.scheme('custom', scheme);

@@ -15,7 +15,7 @@ class Elevania {
       method: 'GET',
     });
     const respJSON = JSON.parse(parseXml(response));
-    const products = respJSON.Products.product;
+    const products = respJSON.Products.product ? respJSON.Products.product : [];
     const newProducts = products.map((el) => Elevania.parseOptionalDetail(el));
     return newProducts;
   }

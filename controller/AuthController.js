@@ -1,4 +1,4 @@
-const { default: customeError } = require('../helper/customeError');
+const customeError = require('../helper/customeError');
 const errorHandler = require('../helper/ErrorHandler');
 const UserService = require('../services/UserService');
 const CryptoPass = require('../utils/cryptoPass');

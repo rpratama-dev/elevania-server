@@ -1,3 +1,5 @@
+const Boom = require('@hapi/boom');
+
 /**
  *
  * @param {any} err
@@ -11,7 +13,7 @@ function errorHandler(err) {
     payload.status = err.response.status;
     payload.response = err.response.statusText;
   }
-  return payload;
+  return Boom.badRequest(payload.response, payload);
 }
 
 module.exports = errorHandler;
