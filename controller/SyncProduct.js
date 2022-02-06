@@ -15,7 +15,13 @@ class SyncProduct {
     try {
       const { pageNumber = 1 } = req.query;
       const products = await Elevania.find(pageNumber);
-      return { response: products, status: 200 };
+      const newProduct = products.map((el) => ({
+        name: el.prdNm,
+        no: el.prdNo,
+        sku: typeof el.sellerPrdCd !== 'string' ? `SKU-${el.prdNo}` : el.sellerPrdCd,
+        price: el.selPrc,
+      }));
+      return { response: newProduct, status: 200 };
     } catch (error) {
       return errorHandler(error);
     }

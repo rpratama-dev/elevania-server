@@ -69,7 +69,6 @@ class ProductService {
   static async deleteOne(prod_no) {
     const query = `DELETE FROM "Products" WHERE "prod_no" = '${prod_no}';`;
     const result = await sequelize.query(query);
-    console.log('result', result);
     return result[0];
   }
 }

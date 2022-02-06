@@ -21,9 +21,9 @@ class JWT {
     const params = {
       ...(options || {}),
       algorithm: 'RS256',
-      issuer: 'ELV',
+      issuer: 'MY STORE',
     };
-    return jwt.sign(JSON.stringify(object), privateKey, params);
+    return jwt.sign(object, privateKey, params);
   }
 
   static verify(token) {
