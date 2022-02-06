@@ -18,6 +18,12 @@ class ContentService {
     const result = await sequelize.query(query);
     return result;
   }
+
+  static async deleteMany(prod_no) {
+    const query = `DELETE FROM "Contents" WHERE "prod_no" = '${prod_no}';`;
+    const result = await sequelize.query(query);
+    return result[0];
+  }
 }
 
 module.exports = ContentService;

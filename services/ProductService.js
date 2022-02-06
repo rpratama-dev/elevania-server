@@ -1,4 +1,5 @@
 const { sequelize } = require('../models');
+const ContentService = require('./ContentService');
 
 class ProductService {
   static async selectIN(IDs = []) {
@@ -31,7 +32,7 @@ class ProductService {
     // const query =
     //   'SELECT * FROM "Products" INNER JOIN "Contents" ON "Products"."prod_no" = "Contents"."prod_no";';
     const query =
-      'SELECT * FROM "Contents" INNER JOIN "Products" ON "Contents"."prod_no" = "Products"."prod_no";';
+      'SELECT * FROM "Contents" RIGHT JOIN "Products" ON "Contents"."prod_no" = "Products"."prod_no";';
     const result = await sequelize.query(query);
     return result[0];
   }
@@ -84,6 +85,7 @@ class ProductService {
   static async deleteOne(prod_no) {
     const query = `DELETE FROM "Products" WHERE "prod_no" = '${prod_no}';`;
     const result = await sequelize.query(query);
+    await ContentService.deleteMany(prod_no);
     return result[0];
   }
 }
