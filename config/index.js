@@ -1,3 +1,8 @@
+const { config } = require('dotenv');
+
+const cfg = { path: './.env.local' };
+config(cfg);
+
 const getEnv = require('../helper/getEnv');
 const PairKey = require('../utils/pairkeys');
 
@@ -14,7 +19,7 @@ if (!pubKey || !privKey) {
  * All Config System is store in here;
  */
 module.exports = {
-  port: getEnv('PORT'),
+  port: +getEnv('PORT') || 3000,
   salt: +getEnv('SALT') || 10,
   publicKey: pubKey,
   privateKey: privKey,
