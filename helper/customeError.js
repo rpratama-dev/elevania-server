@@ -1,4 +1,4 @@
-import createHttpError from 'http-errors';
+const createHttpError = require('http-errors');
 
 function customeError(status, message, option = {}) {
   const error = createHttpError(status, message);
@@ -6,4 +6,4 @@ function customeError(status, message, option = {}) {
   return error;
 }
 
-export default customeError;
+module.exports = customeError;

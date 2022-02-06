@@ -1,5 +1,5 @@
-import getEnv from '../helper/getEnv';
-import PairKey from '../utils/pairkeys';
+const getEnv = require('../helper/getEnv');
+const PairKey = require('../utils/pairkeys');
 
 let pubKey = PairKey.getPubKey();
 let privKey = PairKey.getPrivKey();
@@ -13,7 +13,7 @@ if (!pubKey || !privKey) {
 /**
  * All Config System is store in here;
  */
-export default {
+module.exports = {
   port: getEnv('PORT'),
   salt: +getEnv('SALT') || 10,
   publicKey: pubKey,

@@ -11,7 +11,7 @@ class AuthController {
     if (!user) throw customeError(401, 'Wrong Email / Password');
     const passMatch = CryptoPass.compare(password, user.password);
     if (!passMatch) throw customeError(401, 'Wrong Email / Password');
-    const token = JWT.sign({ email: user.email, id: user.id });
+    const token = JWT.sign({ email: user.email, id: user.id, scope: 'admin' });
     const { full_name, role } = user;
     return { response: { token, user: { email, full_name, role } }, message: 'Login Success' };
   }
