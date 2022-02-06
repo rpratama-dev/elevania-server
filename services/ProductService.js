@@ -27,6 +27,21 @@ class ProductService {
     return result[0];
   }
 
+  static async findJoinContent() {
+    // const query =
+    //   'SELECT * FROM "Products" INNER JOIN "Contents" ON "Products"."prod_no" = "Contents"."prod_no";';
+    const query =
+      'SELECT * FROM "Contents" INNER JOIN "Products" ON "Contents"."prod_no" = "Products"."prod_no";';
+    const result = await sequelize.query(query);
+    return result[0];
+  }
+
+  static async findOneJoinContent(prod_no) {
+    const query = `SELECT * FROM "Contents" INNER JOIN "Products" ON "Contents"."prod_no" = "Products"."prod_no" AND "Products"."prod_no" = '${prod_no}';`;
+    const result = await sequelize.query(query);
+    return result;
+  }
+
   static async pagination() {
     const query = 'SELECT * FROM "Products";';
     const result = await sequelize.query(query);

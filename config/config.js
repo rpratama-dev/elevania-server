@@ -1,19 +1,17 @@
-const cfg = require('.');
-
 const config = {
   development: {
     username: 'postgres',
     password: 'root',
-    use_env_variable: cfg.DB_URI,
-    database: 'dd29l2o7sj8ov4',
+    // use_env_variable: 'DB_URI',
+    database: 'db_ecommerce',
     host: '127.0.0.1',
     dialect: 'postgres',
   },
   test: {
     username: 'postgres',
     password: 'root',
-    use_env_variable: cfg.DB_URI,
-    database: 'dd29l2o7sj8ov4',
+    // use_env_variable: 'DB_URI',
+    database: 'db_ecommerce',
     host: '127.0.0.1',
     dialect: 'postgres',
   },
@@ -25,5 +23,7 @@ const config = {
     dialect: 'postgres',
   },
 };
+
+console.log('cfg', config.DB_URI);
 
 module.exports = config;

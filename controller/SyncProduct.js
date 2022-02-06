@@ -69,7 +69,7 @@ class SyncProduct {
       if (products.length > 0) await ProductService.addProduct(products); // [[], 20 ]
       if (contents.length > 0) await ContentService.addContent(contents); // [[], 31 ]
       if (products.length < 1) throw createHttpError(400, 'All item is exist in databases');
-      return { response: products, status: 200 };
+      return { response: products, status: 200, message: 'Berhasil Import Produk' };
     } catch (error) {
       return errorHandler(error);
     }
