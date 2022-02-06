@@ -16,6 +16,7 @@ if (!pubKey || !privKey) {
 module.exports = {
   port: getEnv('PORT'),
   salt: +getEnv('SALT') || 10,
+  DB_URI: getEnv('DB_URI'),
   publicKey: pubKey,
   privateKey: privKey,
 };
