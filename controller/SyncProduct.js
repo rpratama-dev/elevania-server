@@ -57,7 +57,8 @@ class SyncProduct {
           const { htmlDetail, prdImage01, prdImage02, prdImage03, prdImage04, prdImage05 } = prd;
           const { prdNm, prdNo, sellerPrdCd, selPrc } = prd;
           // prod_no, name, sku, price, description;
-          const sku = typeof sellerPrdCd === 'object' ? `SKU-${prdNo}` : sellerPrdCd;
+          const tempSKU = `SKU-${prdNo}`.toUpperCase();
+          const sku = typeof sellerPrdCd === 'object' ? tempSKU : sellerPrdCd.toUpperCase();
           const newProduct = [prdNo, prdNm, sku, +selPrc, htmlDetail, dateCreated, dateCreated];
           products.push(newProduct);
           imgKeys.forEach((el) => {

@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const createHttpError = require('http-errors');
+const customeError = require('../helper/customeError');
 const errorHandler = require('../helper/ErrorHandler');
 const parseXml = require('../helper/ParseXML');
 const ProductService = require('../services/ProductService');
@@ -47,8 +48,10 @@ class ProductController {
     try {
       const dateCreated = new Date().toISOString();
       const { name, sku, price, description } = req.payload;
+      if (!name || !sku || !price) throw customeError(400, 'Periksa Kembali Data Input');
       const prod_no = Date.now();
-      const payload = [prod_no, name, sku, +price, description, dateCreated, dateCreated];
+      const tempSKU = String(sku).toUpperCase();
+      const payload = [prod_no, name, tempSKU, +price, description, dateCreated, dateCreated];
       await ProductService.addProduct([payload]);
       const params = { prod_no, name, sku, price, description };
       return { response: params, payload, status: 201 };
@@ -60,10 +63,13 @@ class ProductController {
   static async update(req, h) {
     try {
       const { id } = req.params;
+      const { name, sku, price, description } = req.payload;
+      const tempSKU = String(sku).toUpperCase();
+      if (!name || !sku || !price) throw customeError(400, 'Periksa Kembali Data Input');
+
       const [products] = await ProductService.findOne(id);
       if (!products) throw createHttpError(404, 'Product Not Found');
-      const { name, sku, price, description } = req.payload;
-      const payload = { name, sku, price: +price, description };
+      const payload = { name, sku: tempSKU, price: +price, description };
       const response = await ProductService.updateOne(payload, id);
       return { response, payload, status: 200 };
     } catch (error) {

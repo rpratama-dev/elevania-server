@@ -55,6 +55,12 @@ class ProductService {
     return result[0];
   }
 
+  static async findSKU(sku = '') {
+    const query = `SELECT * FROM "Products" WHERE "sku" = '${sku.toUpperCase()}';`;
+    const result = await sequelize.query(query);
+    return result[0];
+  }
+
   /**
    *
    * @param {{
