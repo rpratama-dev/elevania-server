@@ -23,7 +23,7 @@ class ProductController {
       const response = Object.keys(temps)
         .map((el) => temps[el])
         .sort((a, b) => b.id - a.id);
-      return { products, response, status: 200 };
+      return { response, status: 200 };
     } catch (error) {
       return errorHandler(error);
     }
@@ -42,7 +42,7 @@ class ProductController {
       });
       const [response] = Object.keys(temps).map((el) => temps[el]);
       if (products.length < 1) throw createHttpError(404, 'Product Not Found');
-      return { response, status: 200 };
+      return { products, response, status: 200 };
     } catch (error) {
       return errorHandler(error);
     }
@@ -71,9 +71,10 @@ class ProductController {
           return el;
         },
       );
-      await ProductService.addProduct([payload]);
-      const params = { prod_no, name, sku, price, description };
-      return { response: params, payload, status: 201 };
+      const [result] = await ProductService.addProduct([payload]);
+
+      const params = { id: result[0].id, prod_no, name, sku, price, description, images: [] };
+      return { response: params, payload, message: 'Berhasil menambahkan produk', status: 201 };
     } catch (error) {
       return errorHandler(error);
     }
@@ -89,8 +90,12 @@ class ProductController {
       const [products] = await ProductService.findOne(id);
       if (!products) throw createHttpError(404, 'Product Not Found');
       const payload = { name, sku: tempSKU, price: +price, description };
-      const response = await ProductService.updateOne(payload, id);
-      return { response, payload, status: 200 };
+      await ProductService.updateOne(payload, id);
+      return {
+        response: { ...payload, prod_no: id },
+        message: 'Berhasil update product',
+        status: 200,
+      };
     } catch (error) {
       return errorHandler(error);
     }
@@ -102,7 +107,11 @@ class ProductController {
       const [products] = await ProductService.findOne(id);
       if (!products) throw createHttpError(404, 'Product Not Found');
       await ProductService.deleteOne(id);
-      return { response: products, status: 200 };
+      return {
+        response: products,
+        message: `Berhasil hapus produk ${unescape(products.name)}`,
+        status: 200,
+      };
     } catch (error) {
       return errorHandler(error);
     }

@@ -1,3 +1,4 @@
+const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../models');
 const ContentService = require('./ContentService');
 
@@ -16,10 +17,14 @@ class ProductService {
     const values = products.map((el) => `('${el.join("','")}')`);
     const qInsert =
       'INSERT INTO "Products" ("prod_no", "name", "sku", "price", "description", "createdAt", "updatedAt")';
-    const qValue = `VALUES ${values.join(',')}`;
+    const qValue = `VALUES ${values.join(',')} RETURNING "id"`;
     const query = `${qInsert} ${qValue}`;
-    console.log(query);
-    const result = await sequelize.query(query);
+    const result = await sequelize.query(query, {
+      type: QueryTypes.INSERT,
+      returning: true,
+    });
+
+    console.log(result);
     return result;
   }
 
@@ -94,7 +99,10 @@ class ProductService {
     });
     newSet = newSet.slice(0, -2);
     const query = `UPDATE "Products" SET ${newSet} WHERE "prod_no" = '${prod_no}';`;
-    const result = await sequelize.query(query);
+    const result = await sequelize.query(query, {
+      type: QueryTypes.UPDATE,
+      returning: true,
+    });
     return result;
   }
 
