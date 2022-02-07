@@ -9,7 +9,9 @@ const elevaniaHost = require('../utils/elevaniaHost');
 class ProductController {
   static async index(req, h) {
     try {
-      const products = await ProductService.findJoinContent();
+      const { last_id } = req.query;
+      console.log('last_id', last_id);
+      const products = await ProductService.findJoinContent(last_id);
       const temps = {};
       products.forEach((product) => {
         // const product = products[el];
@@ -18,8 +20,10 @@ class ProductController {
         if (!temps[product.prod_no]) temps[product.prod_no] = { ...product, images: [image] };
         else temps[product.prod_no].images.push(image);
       });
-      const response = Object.keys(temps).map((el) => temps[el]);
-      return { response, status: 200 };
+      const response = Object.keys(temps)
+        .map((el) => temps[el])
+        .sort((a, b) => b.id - a.id);
+      return { products, response, status: 200 };
     } catch (error) {
       return errorHandler(error);
     }
@@ -44,6 +48,16 @@ class ProductController {
     }
   }
 
+  static async showSKU(req, h) {
+    try {
+      const { sku } = req.params;
+      const [product = {}] = await ProductService.findSKU(sku);
+      return { response: product, status: 200 };
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
+
   static async store(req, h) {
     try {
       const dateCreated = new Date().toISOString();
@@ -51,7 +65,12 @@ class ProductController {
       if (!name || !sku || !price) throw customeError(400, 'Periksa Kembali Data Input');
       const prod_no = Date.now();
       const tempSKU = String(sku).toUpperCase();
-      const payload = [prod_no, name, tempSKU, +price, description, dateCreated, dateCreated];
+      const payload = [prod_no, name, tempSKU, +price, description, dateCreated, dateCreated].map(
+        (el, i) => {
+          if (![3, 5, 6].includes(i)) return escape(el);
+          return el;
+        },
+      );
       await ProductService.addProduct([payload]);
       const params = { prod_no, name, sku, price, description };
       return { response: params, payload, status: 201 };

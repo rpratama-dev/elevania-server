@@ -38,6 +38,17 @@ class SyncProduct {
     }
   }
 
+  static async showImported(req, h) {
+    try {
+      const { id } = req.params;
+      const products = await ProductService.findProdNo();
+      const newProductNo = products.map((el) => el.prod_no);
+      return { response: newProductNo, status: 200 };
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
+
   static async store(req, h) {
     try {
       const { selectedProducts } = req.payload || {};
@@ -59,7 +70,13 @@ class SyncProduct {
           // prod_no, name, sku, price, description;
           const tempSKU = `SKU-${prdNo}`.toUpperCase();
           const sku = typeof sellerPrdCd === 'object' ? tempSKU : sellerPrdCd.toUpperCase();
-          const newProduct = [prdNo, prdNm, sku, +selPrc, htmlDetail, dateCreated, dateCreated];
+          const newSellPrice = Number.isNaN(+selPrc) ? 0 : +selPrc;
+          const prd1 = [prdNo, prdNm, sku, newSellPrice];
+          const newProduct = [...prd1, htmlDetail, dateCreated, dateCreated].map((el, i) => {
+            if (![3, 5, 6].includes(i)) return escape(el);
+            return el;
+          });
+          console.log(newProduct);
           products.push(newProduct);
           imgKeys.forEach((el) => {
             if (prd[el]) contents.push([prdNo, el, prd[el], dateCreated, dateCreated]); // prod_no, image_type, image_url;

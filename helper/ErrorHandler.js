@@ -7,7 +7,7 @@ const Boom = require('@hapi/boom');
  */
 function errorHandler(err) {
   // const name = err.name || 'InternalError';
-  console.log('err.status', err.stack);
+  console.log('err.status', err.stack || err.message);
   const payload = { status: err.status || 500, response: err.message || 'Internal Server Error' };
   if (err.response) {
     payload.status = err.response.status;

@@ -18,6 +18,7 @@ class ProductService {
       'INSERT INTO "Products" ("prod_no", "name", "sku", "price", "description", "createdAt", "updatedAt")';
     const qValue = `VALUES ${values.join(',')}`;
     const query = `${qInsert} ${qValue}`;
+    console.log(query);
     const result = await sequelize.query(query);
     return result;
   }
@@ -28,11 +29,20 @@ class ProductService {
     return result[0];
   }
 
-  static async findJoinContent() {
+  static async findProdNo() {
+    const query = 'SELECT prod_no FROM "Products";';
+    const result = await sequelize.query(query);
+    return result[0];
+  }
+
+  static async findJoinContent(id) {
     // const query =
     //   'SELECT * FROM "Products" INNER JOIN "Contents" ON "Products"."prod_no" = "Contents"."prod_no";';
-    const query =
-      'SELECT * FROM "Contents" RIGHT JOIN "Products" ON "Contents"."prod_no" = "Products"."prod_no";';
+    let qr1 =
+      'SELECT "P".*, "C"."id" as "c_id", "C"."prod_no" as "no", "C"."image_type" AS "image_type", "C"."image_url" AS "image_url" FROM "Products" as "P" LEFT JOIN "Contents" as "C" ON "P"."prod_no" = "C"."prod_no"';
+    const qr2 = 'ORDER BY "P"."id" DESC LIMIT 20';
+    if (id && !Number.isNaN(+id)) qr1 += ` WHERE "P"."id" < ${id}`;
+    const query = `${qr1} ${qr2}`;
     const result = await sequelize.query(query);
     return result[0];
   }
