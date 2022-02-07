@@ -76,3 +76,18 @@
   - Setelah Itu Pastikan ```Pair Key``` untuk JWT sudah tergenerate
   - ```./config/private.pem```
   - ```./config/public.pub```
+
+### REGISTER ADMIN USER
+  - Jalankan Request Untuk Register User
+  - method ```post```
+  - route ```{{base_url}}/api/v1/users```
+  - body
+  ```json
+    {
+        "full_name": "admin",
+        "email": "admin@mail.com",
+        "password": "admin123",
+        "retype_password": "admin123"
+    }
+  ```
+  - Login Pada Aplikasi Client ```http://localhost:3000/login```
