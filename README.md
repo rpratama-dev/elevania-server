@@ -2,7 +2,13 @@
 
 ## SETUP
 
+
+- INSTALASI: 
+  - Jalankan Perintah Berikut Untuk Menginstall Package Dependencies
+  - ```yarn``` atau ```npm install```
+
 - DATABASE
+  - Sudah Install DB PostgreSQL
   - Buat Database ```db_ecommerce```
   - Config Database
   	```js
@@ -19,13 +25,17 @@
   - Buat File di root directory ```.env.local```
   - ISI ENV
   	```
-      ELEVANIA_API_KEY=xxx 
+      ELEVANIA_API_KEY=xxx sesuaikan saja
       PORT=3000
       SALT=10
     ```
 
 - MIGRATION: 
   - Setelah semua config dibuat jalankan migration
+  - ```sequelize db:migrate```
+
+- START SERVER: 
+  - Setelah menjalankan migration
   - ```sequelize db:migrate```
 
 ## Week-2 Day 5
