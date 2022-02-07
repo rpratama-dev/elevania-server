@@ -1,7 +1,6 @@
 # elevania-server
 
-## SETUP
-
+## SETUP SERVER
 
 - INSTALASI: 
   - Jalankan Perintah Berikut Untuk Menginstall Package Dependencies
@@ -10,7 +9,7 @@
 - DATABASE
   - Sudah Install DB PostgreSQL
   - Buat Database ```db_ecommerce```
-  - Config Database
+  - Config Database ```./config/config.js```
   	```js
     {
       username: 'postgres',
@@ -21,6 +20,7 @@
       dialect: 'postgres',
     }
     ```
+
 - ENVIRONTMENT: 
   - Buat File di root directory ```.env.local```
   - ISI ENV
@@ -38,27 +38,29 @@
   - Setelah menjalankan migration
   - ```sequelize db:migrate```
 
-## Week-2 Day 5
+- START SERVER: 
+  - Jalankan Perintah Beikut
+  - ```yarn start```
+  - Setelah Itu Pastikan ```Pair Key``` untuk JWT sudah tergenerate
+  - ```./config/private.pem```
+  - ```./config/public.pub```
 
-- Challenge Pagi:
-  - kerjakan di folder `server/orchestrator`, aplikasi berupa apollo server (atau digabung dengan express) PORT 5000
-  - kerjakan di folder `server/services/movies`, aplikasi berupa express PORT 5001
-  - kerjakan di folder `server/services/series`, aplikasi berupa express PORT 5002
-- Challenge Siang:
-  - kerjakan di folder `client`, aplikasi berupa react + apollo client 
+## SETUP CLIENT
 
-## Week-3 Day 1
+- INSTALASI: 
+  - Jalankan Perintah Berikut Untuk Menginstall Package Dependencies
+  - ```yarn``` atau ```npm install```
+  - Default Server URL ```http://localhost:3000/api/v1```
+  - Untuk Mengubah Server URL buka file ```./src/utils/CallServer.js```
+  - Cari Code Seperti di bawah ini
+  ```js
+      const instanceAxios = axios.create({
+        // baseURL: '/api/v1',
+        baseURL: 'http://localhost:3000/api/v1',
+        headers: defaultHeaders(),
+        timeout: 180000, // 3 Menit,
+        // withCredentials: false,
+      });
 
-- lanjut kerjakan di folder `client`
-
-
-## Folder Structure
-- client
-- server
-  - monolith
-  - orchestrator-express
-  - orchestrator
-  - services
-    - movies
-    - series
-  
+  ```
+  - Ubah nilai variabel ```baseURL```
