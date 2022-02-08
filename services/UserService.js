@@ -7,7 +7,9 @@ class UserService {
    * @returns
    */
   static async create(user) {
-    const result = await queryCreate('Users', user);
+    const dateCreated = new Date().toISOString();
+    const times = { createdAt: dateCreated, updatedAt: dateCreated };
+    const result = await queryCreate('Users', { ...user, ...times });
     return result.rows;
   }
 

@@ -2,19 +2,15 @@
 const createHttpError = require('http-errors');
 const customeError = require('../helper/customeError');
 const errorHandler = require('../helper/ErrorHandler');
-const parseXml = require('../helper/ParseXML');
 const ProductService = require('../services/ProductService');
-const elevaniaHost = require('../utils/elevaniaHost');
 
 class ProductController {
   static async index(req, h) {
     try {
       const { last_id } = req.query;
-      console.log('last_id', last_id);
       const products = await ProductService.findJoinContent(last_id);
       const temps = {};
       products.forEach((product) => {
-        // const product = products[el];
         const { image_type, image_url } = product;
         const image = { image_type, image_url };
         if (!temps[product.prod_no]) temps[product.prod_no] = { ...product, images: [image] };
@@ -32,7 +28,7 @@ class ProductController {
   static async show(req, h) {
     try {
       const { id } = req.params;
-      const [products] = await ProductService.findOneJoinContent(id);
+      const products = await ProductService.findOneJoinContent(id);
       const temps = {};
       products.forEach((el) => {
         const { image_type, image_url } = el;
@@ -42,7 +38,7 @@ class ProductController {
       });
       const [response] = Object.keys(temps).map((el) => temps[el]);
       if (products.length < 1) throw createHttpError(404, 'Product Not Found');
-      return { products, response, status: 200 };
+      return { response, status: 200 };
     } catch (error) {
       return errorHandler(error);
     }
@@ -60,7 +56,6 @@ class ProductController {
 
   static async store(req, h) {
     try {
-      const dateCreated = new Date().toISOString();
       const { name, sku, price, description } = req.payload;
       if (!name || !sku || !price) throw customeError(400, 'Periksa Kembali Data Input');
       const prod_no = Date.now();

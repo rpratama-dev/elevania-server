@@ -1,12 +1,9 @@
 /* eslint-disable no-unused-vars */
 const createHttpError = require('http-errors');
 const errorHandler = require('../helper/ErrorHandler');
-const parseXml = require('../helper/ParseXML');
-const { sequelize } = require('../models');
 const ContentService = require('../services/ContentService');
 const Elevania = require('../services/ElevaniaService');
 const ProductService = require('../services/ProductService');
-const elevaniaHost = require('../utils/elevaniaHost');
 
 const imgKeys = ['prdImage01', 'prdImage02', 'prdImage03', 'prdImage04', 'prdImage05'];
 

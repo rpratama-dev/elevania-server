@@ -1,28 +1,22 @@
-const { sequelize } = require('../models');
-const { queryCreateMany } = require('../utils/database');
+const { queryCreateMany, queryRead, queryDelete } = require('../utils/database');
 
 class ContentService {
   static async selectIN(IDs = []) {
-    const ids = `(${IDs.join(',')})`;
-    const query = `SELECT prod_no FROM Products WHERE prod_no IN ${ids};`;
-    const result = await sequelize.query(query);
-    return result;
+    const alias = [];
+    for (let i = 1; i <= IDs.length; i += 1) alias.push(`$${i}`);
+    const query = `SELECT "prod_no" FROM Products WHERE "prod_no" IN (${alias.join(',')});`;
+    const result = await queryRead({ text: query, values: IDs });
+    const newIDs = result.rows.map((el) => el.prod_no);
+    return newIDs;
   }
 
   static async addContent(contents = []) {
-    // eslint-disable-next-line quotes
-    // const values = contents.map((el) => `('${el.join("','")}')`);
-    // const qInsert =
-    //   'INSERT INTO "Contents" ("prod_no", "image_type", "image_url", "createdAt", "updatedAt")';
-    // const qValue = `VALUES ${values.join(',')}`;
-    // const query = `${qInsert} ${qValue}`;
     const result = await queryCreateMany('Contents', contents);
     return result.rows;
   }
 
-  static async deleteMany(prod_no) {
-    const query = `DELETE FROM "Contents" WHERE "prod_no" = '${prod_no}';`;
-    const result = await sequelize.query(query);
+  static async deleteMany(id) {
+    const result = await queryDelete('Contents', id);
     return result[0];
   }
 }

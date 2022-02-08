@@ -112,21 +112,21 @@ const queryRead = async (query) =>
  * @param {string} tabel
  * @param {{
  *  [key: string]: any,
- * }} params
+ * }} product
  * @param {string} keyId
  * @returns
  */
-const queryUpdate = async (tabel, params, keyId) =>
+const queryUpdate = async (tabel, product, keyId) =>
   new Promise((resolve, reject) => {
     (async () => {
       try {
-        if (!tabel || !params || !keyId) throw customeError(400, 'Invalid parameter');
-        const keys = Object.keys(params).filter((el) => el !== keyId);
+        if (!tabel || !product || !keyId) throw customeError(400, 'Invalid parameter');
+        const keys = Object.keys(product).filter((el) => el !== keyId);
         const fields = keys.map((el, i) => `"${el}" = $${i + 1}`).split(',');
         keys.push(keyId); // insert again key id
         const query = {
           text: `UPDATE ${tabel} SET ${fields} WHERE ${keyId} = $${keys.length} RETURNING *`,
-          values: keys.map((el) => params[el]),
+          values: keys.map((el) => product[el]),
         };
 
         const response = await client.query(query);
@@ -140,17 +140,17 @@ const queryUpdate = async (tabel, params, keyId) =>
 /**
  *
  * @param {string} tabel
- * @param {string} keyId
+ * @param {string} id
  * @returns
  */
-const queryDelete = async (tabel, keyId) =>
+const queryDelete = async (tabel, id) =>
   new Promise((resolve, reject) => {
     (async () => {
       try {
-        if (!tabel || !keyId) throw customeError(400, 'Invalid parameter');
+        if (!tabel || !id) throw customeError(400, 'Invalid parameter');
         const query = {
-          text: `DELETE FROM ${tabel} WHERE ${keyId} = $1`,
-          values: [keyId],
+          text: `DELETE FROM ${tabel} WHERE "id" = $1`,
+          values: [id],
         };
 
         const response = await client.query(query);
