@@ -1,6 +1,6 @@
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../models');
-const { queryExecute, queryCreateMany } = require('../utils/database');
+const { queryExecute, queryCreateMany, queryCreate } = require('../utils/database');
 const ContentService = require('./ContentService');
 
 class ProductService {
@@ -13,14 +13,19 @@ class ProductService {
     return newIDs;
   }
 
-  static async addProduct(products = []) {
+  static async addManyProduct(products = []) {
     const result = await queryCreateMany('Products', products);
+    return result.rows;
+  }
+
+  static async addProduct(products = {}) {
+    const result = await queryCreate('Products', products);
     return result.rows;
   }
 
   static async find() {
     const query = 'SELECT * FROM "Products";';
-    const result = await sequelize.query(query);
+    const result = await queryExecute(query);
     return result[0];
   }
 

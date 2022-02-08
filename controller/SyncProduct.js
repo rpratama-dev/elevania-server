@@ -101,7 +101,7 @@ class SyncProduct {
       });
 
       const response = {};
-      if (products.length > 0) response[0] = await ProductService.addProduct(products); // Create Many Product
+      if (products.length > 0) response[0] = await ProductService.addManyProduct(products); // Create Many Product
       if (contents.length > 0) response[1] = await ContentService.addContent(contents); // Create Many Contents
       if (products.length < 1) throw createHttpError(400, 'All item is exist in databases');
       return { response, status: 200, message: 'Berhasil Import Produk' };

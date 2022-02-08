@@ -15,9 +15,11 @@ const client = new Client({
   port: dbconfig.port || 5432,
 });
 
-// const start = async () => {
-// };
-
+/**
+ *
+ * @param {string} queryText
+ * @returns
+ */
 const queryExecute = (queryText) =>
   new Promise((resolve, reject) => {
     (async () => {
@@ -68,10 +70,10 @@ const queryCreate = async (tabel, params) =>
     (async () => {
       try {
         const keys = Object.keys(params);
-        const alias = keys.map((el, i) => `$${i + 1}`).split(',');
-        const fields = keys.split(',');
+        const fields = keys.join('","');
+        const alias = keys.map((el, i) => `$${i + 1}`).join(',');
         const query = {
-          text: `INSERT INTO ${tabel}(${fields}) VALUES(${alias}) RETURNING *`,
+          text: `INSERT INTO "${tabel}" ("${fields}") VALUES (${alias}) RETURNING *`,
           values: keys.map((el) => params[el]),
         };
 

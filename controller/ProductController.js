@@ -65,16 +65,10 @@ class ProductController {
       if (!name || !sku || !price) throw customeError(400, 'Periksa Kembali Data Input');
       const prod_no = Date.now();
       const tempSKU = String(sku).toUpperCase();
-      const payload = [prod_no, name, tempSKU, +price, description, dateCreated, dateCreated].map(
-        (el, i) => {
-          if (![3, 5, 6].includes(i)) return escape(el);
-          return el;
-        },
-      );
+      const payload = { prod_no, name, sku: tempSKU, price: +price, description };
       const [result] = await ProductService.addProduct([payload]);
-
-      const params = { id: result[0].id, prod_no, name, sku, price, description, images: [] };
-      return { response: params, payload, message: 'Berhasil menambahkan produk', status: 201 };
+      const message = 'Berhasil menambahkan produk';
+      return { response: result, status: 201, message };
     } catch (error) {
       return errorHandler(error);
     }
