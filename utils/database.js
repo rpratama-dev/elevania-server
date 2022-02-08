@@ -122,10 +122,11 @@ const queryUpdate = async (tabel, product, keyId) =>
       try {
         if (!tabel || !product || !keyId) throw customeError(400, 'Invalid parameter');
         const keys = Object.keys(product).filter((el) => el !== keyId);
-        const fields = keys.map((el, i) => `"${el}" = $${i + 1}`).split(',');
+        console.log('keys', keys);
+        const fields = keys.map((el, i) => `"${el}" = $${i + 1}`).join(',');
         keys.push(keyId); // insert again key id
         const query = {
-          text: `UPDATE ${tabel} SET ${fields} WHERE ${keyId} = $${keys.length} RETURNING *`,
+          text: `UPDATE "${tabel}" SET ${fields} WHERE "${keyId}" = $${keys.length} RETURNING *`,
           values: keys.map((el) => product[el]),
         };
 

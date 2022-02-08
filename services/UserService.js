@@ -1,4 +1,4 @@
-const { queryCreate, queryRead } = require('../utils/database');
+const { queryCreate, queryRead, queryUpdate } = require('../utils/database');
 
 class UserService {
   /**
@@ -11,6 +11,25 @@ class UserService {
     const times = { createdAt: dateCreated, updatedAt: dateCreated };
     const result = await queryCreate('Users', { ...user, ...times });
     return result.rows;
+  }
+
+  /**
+   *
+   * @param {{
+   *  full_name: string,
+   *  email: string,
+   *  role: number,
+   *  description: string,
+   *  password: string,
+   * }} user
+   * @param {string} email
+   * @returns
+   */
+  static async update(user, email) {
+    user.updatedAt = new Date().toISOString();
+    user.email = email;
+    const result = await queryUpdate('Users', user, 'email');
+    return result;
   }
 
   /**

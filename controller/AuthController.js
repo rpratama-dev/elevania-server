@@ -15,7 +15,8 @@ class AuthController {
       if (!passMatch) throw customeError(401, 'Wrong Email / Password');
       const token = JWT.sign({ email: user.email, id: user.id, scope: 'admin' }); // Create JWT token
       const { full_name, role } = user;
-      const response = { token, user: { email, full_name, role } };
+      await UserService.update({ is_login: 1 }, email);
+      const response = { token, user: { email, full_name, is_login: 1, role } };
       return { response, status: 200, message: 'Login Success' };
     } catch (error) {
       return errorHandler(error);
@@ -28,6 +29,17 @@ class AuthController {
       const userLogin = credentials.user;
       const response = userLogin;
       return { response, status: 200, message: 'Token is verified' };
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
+
+  static async logout(req, h) {
+    try {
+      const { credentials } = req.auth;
+      const userLogin = credentials.user;
+      await UserService.update({ is_login: 0 }, credentials.email);
+      return { response: userLogin, status: 200, message: 'Logout success' };
     } catch (error) {
       return errorHandler(error);
     }

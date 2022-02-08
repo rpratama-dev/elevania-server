@@ -10,7 +10,8 @@ const auth = { strategy: 'default' };
 const router = (prefixs) => {
   const routes = [
     { path: prefixs, method: 'POST', handler: Controller.login },
-    { path: `${prefixs}/verify`, method: 'GET', handler: Controller.verify, options: { auth } },
+    { path: prefixs, method: 'GET', handler: Controller.verify, options: { auth } },
+    { path: prefixs, method: 'DELETE', handler: Controller.logout, options: { auth } },
   ];
   return routes;
 };
