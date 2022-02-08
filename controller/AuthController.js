@@ -9,13 +9,14 @@ class AuthController {
   static async login(req, h) {
     try {
       const { email, password } = req.payload;
-      const [user] = await UserService.findOne(['email', email]);
+      const [user] = await UserService.findOne(email); // FInd user by email
       if (!user) throw customeError(401, 'Wrong Email / Password');
-      const passMatch = CryptoPass.compare(password, user.password);
+      const passMatch = CryptoPass.compare(password, user.password); // Compare password with hash
       if (!passMatch) throw customeError(401, 'Wrong Email / Password');
-      const token = JWT.sign({ email: user.email, id: user.id, scope: 'admin' });
+      const token = JWT.sign({ email: user.email, id: user.id, scope: 'admin' }); // Create JWT token
       const { full_name, role } = user;
-      return { response: { token, user: { email, full_name, role } }, message: 'Login Success' };
+      const response = { token, user: { email, full_name, role } };
+      return { response, status: 200, message: 'Login Success' };
     } catch (error) {
       return errorHandler(error);
     }

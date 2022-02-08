@@ -25,8 +25,8 @@ class UserController {
 
   static async show(req, h) {
     try {
-      const { id } = req.params;
-      const user = await UserService.findOne(id);
+      const { id: email } = req.params;
+      const user = await UserService.findOne(email);
       return { response: user, status: 200 };
     } catch (error) {
       return errorHandler(error);
