@@ -24,6 +24,4 @@ const config = {
   },
 };
 
-console.log('cfg', config.DB_URI);
-
 module.exports = config;
