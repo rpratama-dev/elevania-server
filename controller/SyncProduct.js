@@ -51,43 +51,60 @@ class SyncProduct {
 
   static async store(req, h) {
     try {
-      const { selectedProducts } = req.payload || {};
-      if (!selectedProducts || !Array.isArray(selectedProducts))
-        throw createHttpError(400, 'Invalid Selected Products');
-      const products = [];
-      const contents = [];
-      const alreadyIserted = await ProductService.selectIN(selectedProducts);
-      const uniquProduct = [];
-      selectedProducts.forEach((el) => {
-        if (alreadyIserted.indexOf(el) < 0) uniquProduct.push(el);
+      const { selectedProducts: arr } = req.payload || {};
+      // Validate Selected IDs
+      if (!arr || !Array.isArray(arr)) throw createHttpError(400, 'Invalid Selected Products');
+      const idSelecteds = arr.filter((item, i) => arr.indexOf(item) === i); // Get unique prod_no
+      const products = []; // Initiate products
+      const contents = []; // Initiate Contents
+      // Get already imported prod_no
+      const alreadyIserted = await ProductService.selectIN(idSelecteds);
+      const uniquProduct = []; // Initiate variable not imported prod_no
+      idSelecteds.forEach((el) => {
+        if (alreadyIserted.indexOf(el) < 0) uniquProduct.push(el); // Push unique prod_no
       });
+      // Fetch all detail product from elevania where unique prod_no
       const newProducts = await Promise.all(uniquProduct.map((el) => Elevania.findOne(el)));
-      const dateCreated = new Date().toISOString();
+      const dateCreated = new Date(); // set createdAt
+      // iterate product from elevania, and parse to new format
       newProducts.forEach((prd) => {
         if (prd) {
-          const { htmlDetail, prdImage01, prdImage02, prdImage03, prdImage04, prdImage05 } = prd;
-          const { prdNm, prdNo, sellerPrdCd, selPrc } = prd;
+          const { htmlDetail, prdNm, prdNo, sellerPrdCd, selPrc } = prd;
           // prod_no, name, sku, price, description;
-          const tempSKU = `SKU-${prdNo}`.toUpperCase();
-          const sku = typeof sellerPrdCd === 'object' ? tempSKU : sellerPrdCd.toUpperCase();
-          const newSellPrice = Number.isNaN(+selPrc) ? 0 : +selPrc;
-          const prd1 = [prdNo, prdNm, sku, newSellPrice];
-          const newProduct = [...prd1, htmlDetail, dateCreated, dateCreated].map((el, i) => {
-            if (![3, 5, 6].includes(i)) return escape(el);
-            return el;
-          });
-          console.log(newProduct);
-          products.push(newProduct);
+          const defSKU = `SKU-${prdNo}`.toUpperCase(); // set default SKU
+          const sku = typeof sellerPrdCd === 'object' ? defSKU : sellerPrdCd.toUpperCase();
+          const price = Number.isNaN(+selPrc) ? 0 : +selPrc; // Handle Product Price
+          // initiate payload product
+          const payloadProduct = {
+            sku,
+            price,
+            name: prdNm,
+            prod_no: prdNo,
+            description: htmlDetail,
+            createdAt: dateCreated,
+            updatedAt: dateCreated,
+          };
+          products.push(payloadProduct); // Push new Product Format to products
+          // iterate available image keys
           imgKeys.forEach((el) => {
-            if (prd[el]) contents.push([prdNo, el, prd[el], dateCreated, dateCreated]); // prod_no, image_type, image_url;
+            const payloadContents = {
+              createdAt: dateCreated,
+              updatedAt: dateCreated,
+              prod_no: prdNo,
+              image_type: el,
+              image_url: prd[el],
+            };
+            // prod_no, image_type, image_url;
+            if (prd[el]) contents.push(payloadContents); // Push new image to contents
           });
         }
       });
 
-      if (products.length > 0) await ProductService.addProduct(products); // [[], 20 ]
-      if (contents.length > 0) await ContentService.addContent(contents); // [[], 31 ]
+      const response = {};
+      if (products.length > 0) response[0] = await ProductService.addProduct(products); // Create Many Product
+      if (contents.length > 0) response[1] = await ContentService.addContent(contents); // Create Many Contents
       if (products.length < 1) throw createHttpError(400, 'All item is exist in databases');
-      return { response: products, status: 200, message: 'Berhasil Import Produk' };
+      return { response, status: 200, message: 'Berhasil Import Produk' };
     } catch (error) {
       return errorHandler(error);
     }

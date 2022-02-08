@@ -1,5 +1,6 @@
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../models');
+const { queryExecute, queryCreateMany } = require('../utils/database');
 const ContentService = require('./ContentService');
 
 class ProductService {
@@ -7,25 +8,14 @@ class ProductService {
     // eslint-disable-next-line quotes
     const ids = `('${IDs.join("','")}')`;
     const query = `SELECT "prod_no" FROM "Products" WHERE "prod_no" IN ${ids};`;
-    const result = await sequelize.query(query);
-    const newIDs = result[0].map((el) => el.prod_no);
+    const result = await queryExecute(query);
+    const newIDs = result.rows.map((el) => el.prod_no);
     return newIDs;
   }
 
   static async addProduct(products = []) {
-    // eslint-disable-next-line quotes
-    const values = products.map((el) => `('${el.join("','")}')`);
-    const qInsert =
-      'INSERT INTO "Products" ("prod_no", "name", "sku", "price", "description", "createdAt", "updatedAt")';
-    const qValue = `VALUES ${values.join(',')} RETURNING "id"`;
-    const query = `${qInsert} ${qValue}`;
-    const result = await sequelize.query(query, {
-      type: QueryTypes.INSERT,
-      returning: true,
-    });
-
-    console.log(result);
-    return result;
+    const result = await queryCreateMany('Products', products);
+    return result.rows;
   }
 
   static async find() {

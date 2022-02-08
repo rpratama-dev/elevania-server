@@ -1,4 +1,5 @@
 const { sequelize } = require('../models');
+const { queryCreateMany } = require('../utils/database');
 
 class ContentService {
   static async selectIN(IDs = []) {
@@ -10,13 +11,13 @@ class ContentService {
 
   static async addContent(contents = []) {
     // eslint-disable-next-line quotes
-    const values = contents.map((el) => `('${el.join("','")}')`);
-    const qInsert =
-      'INSERT INTO "Contents" ("prod_no", "image_type", "image_url", "createdAt", "updatedAt")';
-    const qValue = `VALUES ${values.join(',')}`;
-    const query = `${qInsert} ${qValue}`;
-    const result = await sequelize.query(query);
-    return result;
+    // const values = contents.map((el) => `('${el.join("','")}')`);
+    // const qInsert =
+    //   'INSERT INTO "Contents" ("prod_no", "image_type", "image_url", "createdAt", "updatedAt")';
+    // const qValue = `VALUES ${values.join(',')}`;
+    // const query = `${qInsert} ${qValue}`;
+    const result = await queryCreateMany('Contents', contents);
+    return result.rows;
   }
 
   static async deleteMany(prod_no) {

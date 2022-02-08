@@ -1,4 +1,5 @@
 const { Client } = require('pg');
+const format = require('pg-format');
 const config = require('../config/config');
 const customeError = require('../helper/customeError');
 
@@ -14,17 +15,44 @@ const client = new Client({
   port: dbconfig.port || 5432,
 });
 
-const queryExecute = () =>
+// const start = async () => {
+// };
+
+const queryExecute = (queryText) =>
   new Promise((resolve, reject) => {
     (async () => {
       try {
-        await client.connect();
-        const res = await client.query('SELECT NOW()');
+        const res = await client.query(queryText);
         resolve(res);
       } catch (error) {
         reject(error);
-      } finally {
-        client.end();
+      }
+    })();
+  });
+
+/**
+ *
+ * @param {string} tabel
+ * @param {Array<{ [key: string]: any }>} params
+ * @returns
+ */
+const queryCreateMany = async (tabel, params) =>
+  new Promise((resolve, reject) => {
+    (async () => {
+      try {
+        const keys = Object.keys(params[0]);
+        const fields = keys.join('","');
+        const values = [];
+        params.forEach((obj) => {
+          const temps = keys.map((key) => obj[key]);
+          values.push(temps);
+        });
+        const query = format(`INSERT INTO "${tabel}" ("${fields}") VALUES %L returning *`, values);
+        console.log('query', query);
+        const response = await client.query(query);
+        resolve(response);
+      } catch (error) {
+        reject(error);
       }
     })();
   });
@@ -47,13 +75,10 @@ const queryCreate = async (tabel, params) =>
           values: keys.map((el) => params[el]),
         };
 
-        await client.connect();
         const response = await client.query(query);
         resolve(response);
       } catch (error) {
         reject(error);
-      } finally {
-        client.end();
       }
     })();
   });
@@ -72,13 +97,10 @@ const queryRead = async (query) =>
       try {
         if (!query) throw customeError(400, 'Invalid parameter');
 
-        await client.connect();
         const response = await client.query(query);
         resolve(response);
       } catch (error) {
         reject(error);
-      } finally {
-        client.end();
       }
     })();
   });
@@ -105,13 +127,10 @@ const queryUpdate = async (tabel, params, keyId) =>
           values: keys.map((el) => params[el]),
         };
 
-        await client.connect();
         const response = await client.query(query);
         resolve(response);
       } catch (error) {
         reject(error);
-      } finally {
-        client.end();
       }
     })();
   });
@@ -132,21 +151,20 @@ const queryDelete = async (tabel, keyId) =>
           values: [keyId],
         };
 
-        await client.connect();
         const response = await client.query(query);
         resolve(response);
       } catch (error) {
         reject(error);
-      } finally {
-        client.end();
       }
     })();
   });
 
 module.exports = {
+  queryCreateMany,
   queryCreate,
   queryRead,
   queryUpdate,
   queryDelete,
   queryExecute,
+  client,
 };

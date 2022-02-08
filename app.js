@@ -4,6 +4,7 @@ const routes = require('./routes');
 const Auth = require('./middleware/Auth');
 
 const appConfig = require('./config');
+const { client } = require('./utils/database');
 
 const init = async () => {
   const server = Hapi.server({
@@ -32,6 +33,7 @@ const init = async () => {
     },
   });
   routes(server);
+  await client.connect();
   await server.start();
   console.log('Server running on', server.info.uri);
 };
