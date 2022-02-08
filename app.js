@@ -10,10 +10,14 @@ const init = async () => {
   const server = Hapi.server({
     port: appConfig.port,
     host: 'localhost',
+    debug: { request: ['error'] },
     routes: {
       cors: {
         origin: ['*'],
         additionalHeaders: ['cache-control', 'access_token', 'x-requested-with'],
+      },
+      log: {
+        collect: true,
       },
     },
   });
