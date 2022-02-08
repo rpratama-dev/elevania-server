@@ -22,6 +22,7 @@ class JWT {
       ...(options || {}),
       algorithm: 'RS256',
       issuer: 'MY STORE',
+      expiresIn: '10h',
     };
     return jwt.sign(object, privateKey, params);
   }
@@ -33,11 +34,7 @@ class JWT {
           const decoded = jwt.verify(token, publicKey, {
             algorithms: ['RS256'],
           });
-          resolve({
-            valid: true,
-            expired: false,
-            decoded,
-          });
+          resolve({ valid: true, expired: false, decoded });
         } catch (e) {
           reject(
             customeError(401, 'Invalid jwt', {

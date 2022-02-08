@@ -11,7 +11,7 @@ class Auth {
       if (!token) throw new Error('Unauthorized');
       return h.authenticated({ credentials: decoded });
     } catch (error) {
-      return h.unauthenticated();
+      return h.unauthenticated(new Error('Unauthorized'));
     }
   }
 }
