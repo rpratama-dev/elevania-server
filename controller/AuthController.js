@@ -22,6 +22,17 @@ class AuthController {
     }
   }
 
+  static async verify(req, h) {
+    try {
+      const { credentials } = req.auth;
+      const userLogin = credentials.user;
+      const response = userLogin;
+      return { response, status: 200, message: 'Token is verified' };
+    } catch (error) {
+      return errorHandler(error);
+    }
+  }
+
   static async forgot() {
     return { response: 'Under Development' };
   }

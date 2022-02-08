@@ -71,9 +71,13 @@ class ProductService {
                 LEFT JOIN "Contents" as "C" ON "P"."prod_no" = "C"."prod_no"`;
 
     const qry2 = 'ORDER BY "P"."id" DESC LIMIT 20';
-    if (id && !Number.isNaN(+id)) qry1 += ' WHERE "P"."id" < $1';
+    const values = [];
+    if (id && !Number.isNaN(+id)) {
+      qry1 += ' WHERE "P"."id" < $1';
+      values.push(id);
+    }
     const query = `${qry1} ${qry2}`;
-    const result = await queryRead({ text: query, values: id ? [id] : [] });
+    const result = await queryRead({ text: query, values });
     return result.rows;
   }
 

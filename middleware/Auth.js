@@ -1,3 +1,4 @@
+const UserService = require('../services/UserService');
 const JWT = require('../utils/jwt');
 
 class Auth {
@@ -9,7 +10,9 @@ class Auth {
       if (!token || ['null', 'undefine'].includes(token)) throw new Error('Unauthorized');
       const { decoded } = await JWT.verify(token);
       if (!token) throw new Error('Unauthorized');
-      return h.authenticated({ credentials: decoded });
+      const [user] = await UserService.findOne(decoded.email);
+      delete user.password;
+      return h.authenticated({ credentials: { ...decoded, user } });
     } catch (error) {
       return h.unauthenticated(new Error('Unauthorized'));
     }

@@ -8,6 +8,7 @@ class ProductController {
   static async index(req, h) {
     try {
       const { last_id } = req.query;
+      console.log('last_id', last_id);
       const products = await ProductService.findJoinContent(last_id);
       const temps = {};
       products.forEach((product) => {
