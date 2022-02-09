@@ -93,12 +93,6 @@ class ProductService {
     return result.rows;
   }
 
-  static async pagination() {
-    const query = 'SELECT * FROM "Products";';
-    const result = await queryExecute(query);
-    return result[0];
-  }
-
   /**
    *
    * @param {string} prod_no
@@ -106,8 +100,8 @@ class ProductService {
    */
   static async findOne(prod_no) {
     const query = 'SELECT * FROM "Products" WHERE "prod_no" = $1;';
-    const result = await queryRead({ test: query, values: [prod_no] });
-    return result[0];
+    const result = await queryRead({ text: query, values: [prod_no] });
+    return result.rows;
   }
 
   /**
@@ -118,7 +112,7 @@ class ProductService {
   static async findSKU(sku = '') {
     const query = 'SELECT * FROM "Products" WHERE "sku" = $1;';
     const result = await queryRead({ text: query, values: [sku] });
-    return result[0];
+    return result.rows;
   }
 
   /**
@@ -144,10 +138,10 @@ class ProductService {
    * @param {string} id
    * @returns
    */
-  static async deleteOne(id) {
-    const result = await queryDelete('Products', id);
-    await ContentService.deleteMany(id);
-    return result[0];
+  static async deleteOne(prod_no) {
+    const result = await queryDelete('Products', { prod_no });
+    await ContentService.deleteMany(prod_no);
+    return result.rows;
   }
 }
 

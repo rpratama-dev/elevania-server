@@ -8,14 +8,15 @@ class ProductController {
   static async index(req, h) {
     try {
       const { last_id } = req.query;
-      console.log('last_id', last_id);
       const products = await ProductService.findJoinContent(last_id);
       const temps = {};
       products.forEach((product) => {
         const { image_type, image_url } = product;
         const image = { image_type, image_url };
-        if (!temps[product.prod_no]) temps[product.prod_no] = { ...product, images: [image] };
-        else temps[product.prod_no].images.push(image);
+        const images = image_url ? [image] : [];
+        // If Product not Exist
+        if (!temps[product.prod_no]) temps[product.prod_no] = { ...product, images };
+        else if (image_url) temps[product.prod_no].images.push(image); // If Product is Exist
       });
       const response = Object.keys(temps)
         .map((el) => temps[el])
@@ -62,7 +63,7 @@ class ProductController {
       const prod_no = Date.now();
       const tempSKU = String(sku).toUpperCase();
       const payload = { prod_no, name, sku: tempSKU, price: +price, description };
-      const [result] = await ProductService.addProduct([payload]);
+      const [result] = await ProductService.addProduct(payload);
       const message = 'Berhasil menambahkan produk';
       return { response: result, status: 201, message };
     } catch (error) {
@@ -94,12 +95,12 @@ class ProductController {
   static async delete(req, h) {
     try {
       const { id } = req.params;
-      const [products] = await ProductService.findOne(id);
-      if (!products) throw createHttpError(404, 'Product Not Found');
-      await ProductService.deleteOne(id);
+      const [product] = await ProductService.findOne(id);
+      if (!product) throw createHttpError(404, 'Product Not Found');
+      await ProductService.deleteOne(product.prod_no);
       return {
-        response: products,
-        message: `Berhasil hapus produk ${unescape(products.name)}`,
+        response: product,
+        message: `Berhasil hapus produk ${product.name}`,
         status: 200,
       };
     } catch (error) {

@@ -15,9 +15,9 @@ class ContentService {
     return result.rows;
   }
 
-  static async deleteMany(id) {
-    const result = await queryDelete('Contents', id);
-    return result[0];
+  static async deleteMany(prod_no) {
+    const result = await queryDelete('Contents', { prod_no });
+    return result.rows;
   }
 }
 

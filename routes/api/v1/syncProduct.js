@@ -1,5 +1,6 @@
 const Controller = require('../../../controller/SyncProduct');
 
+const auth = { strategy: 'default', scope: ['admin'] };
 /**
  *
  * @param {string} prefixs
@@ -7,12 +8,15 @@ const Controller = require('../../../controller/SyncProduct');
  */
 const router = (prefixs) => {
   const routes = [
-    { path: prefixs, method: 'GET', handler: Controller.index },
-    { path: prefixs, method: 'POST', handler: Controller.store },
-    { path: `${prefixs}/imported`, method: 'GET', handler: Controller.showImported },
-    { path: `${prefixs}/{id}`, method: 'GET', handler: Controller.show },
-    // { path: `${prefixs}/{id}`, method: 'PATCH', handler: Controller.patch },
-    // { path: `${prefixs}/{id}`, method: 'DELETE', handler: Controller.delete },
+    { path: prefixs, method: 'GET', handler: Controller.index, options: { auth } },
+    { path: prefixs, method: 'POST', handler: Controller.store, options: { auth } },
+    {
+      path: `${prefixs}/imported`,
+      method: 'GET',
+      handler: Controller.showImported,
+      options: { auth },
+    },
+    { path: `${prefixs}/{id}`, method: 'GET', handler: Controller.show, options: { auth } },
   ];
   return routes;
 };
