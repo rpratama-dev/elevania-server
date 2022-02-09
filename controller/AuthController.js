@@ -39,7 +39,7 @@ class AuthController {
       const { credentials } = req.auth;
       const userLogin = credentials.user;
       await UserService.update({ is_login: 0 }, credentials.email);
-      return { response: userLogin, status: 200, message: 'Logout success' };
+      return { response: { ...userLogin, is_login: 0 }, status: 200, message: 'Logout success' };
     } catch (error) {
       return errorHandler(error);
     }
