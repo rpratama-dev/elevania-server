@@ -5,9 +5,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-./config/private.pem
-./config/public.pub 
-./jest_html_reporters.html
+config/private.pem
+config/public.pub 
+jest-html-reporters-attach/
+jest_html_reporters.html
 
 # Runtime data
 pids
