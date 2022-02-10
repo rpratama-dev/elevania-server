@@ -41,6 +41,3 @@ module.exports = {
     message: 'duplicate key value violates unique constraint "Products_sku_key"',
   },
 };
-
-// coverage
-// jest-html-reporters-attach

@@ -26,21 +26,21 @@ let access_token = '';
 
 describe('USER', () => {
   describe('Post Create User', () => {
-    test('Data Register Blank', async () => {
+    test('Handle Register User w Data Blank', async () => {
       const response = await endpointUser.userAdd(dataRequestUser.dataRegisterBlank);
       expect(response.status).toEqual(400);
       expect(response.body).toMatchSchema(schemaUser.errorSchema);
       expect(response.body).toEqual(bodyValidatorUser.invalidInput);
     });
 
-    test('Data Register Invalid Email', async () => {
+    test('Handle Register User w Invalid Email', async () => {
       const response = await endpointUser.userAdd(dataRequestUser.dataEmailInvalid);
       expect(response.status).toEqual(400);
       expect(response.body).toMatchSchema(schemaUser.errorSchema);
       expect(response.body).toEqual(bodyValidatorUser.invalidInput);
     });
 
-    test('Password Not Match', async () => {
+    test('Handle Invalid Retype Pasword (Password Not Match)', async () => {
       const response = await endpointUser.userAdd(dataRequestUser.passNoMatch);
       expect(response.status).toEqual(400);
       expect(response.body).toMatchSchema(schemaUser.errorSchema);
@@ -59,7 +59,7 @@ describe('USER', () => {
       expect(response.body.response.role).toEqual(dataRegister.response.role);
     });
 
-    test('Register Duplicate User', async () => {
+    test('Handle Register Duplicate User', async () => {
       const response = await endpointUser.userAdd(dataRequestUser.dataRegister);
       expect(response.status).toEqual(400);
       expect(response.body.statusCode).toEqual(400);
@@ -69,21 +69,21 @@ describe('USER', () => {
   });
 
   describe('User Login', () => {
-    test('Login Field Blank', async () => {
+    test('Handle Login Field Blank', async () => {
       const response = await endpointUser.userLogin(dataRequestUser.dataLoginBlank);
       expect(response.status).toEqual(400);
       expect(response.body).toMatchSchema(schemaUser.errorSchema);
       expect(response.body).toEqual(bodyValidatorUser.invalidInput);
     });
 
-    test('Login Wrong Email', async () => {
+    test('Handle Login w Wrong Email', async () => {
       const response = await endpointUser.userLogin(dataRequestUser.dataLoginWrongEmail);
       expect(response.status).toEqual(401);
       expect(response.body).toMatchSchema(schemaUser.errorSchema);
       expect(response.body).toEqual(bodyValidatorUser.dataLoginWrong);
     });
 
-    test('Login Wrong Password', async () => {
+    test('Handle Login w Wrong Password', async () => {
       const response = await endpointUser.userLogin(dataRequestUser.dataLoginWrongPass);
       expect(response.status).toEqual(401);
       expect(response.body).toMatchSchema(schemaUser.errorSchema);
@@ -100,7 +100,7 @@ describe('USER', () => {
       access_token = response.body.response.token;
     });
 
-    test('Verify User', async () => {
+    test('Handle Verify User', async () => {
       const response = await endpointUser.verifyLogin(access_token);
       expect(response.status).toEqual(200);
       expect(response.body).toBeValidSchema(schemaUser.verifiedUser);
@@ -144,21 +144,21 @@ describe('PRODUCT SYNC', () => {
   });
 
   describe('Sync Product', () => {
-    test('Failed Get List Product Without Login', async () => {
+    test('Handle Get List Product w/h Login', async () => {
       const response = await endpoint.getProducts('', 1);
       expect(response.status).toEqual(401);
       expect(response.body).toEqual(bodyValidatorUser.accessDenied);
       expect(response.body).toBeValidSchema(schemaUser.accessDenied);
     });
 
-    test('Get Products With Login', async () => {
+    test('Handle Get Products With Login', async () => {
       const response = await endpoint.getProducts(access_token, 1);
       expect(response.status).toEqual(200);
       expect(response.body).toBeValidSchema(schema.getProducts);
       expect(response.body.status).toEqual(200);
     });
 
-    test('Failed Get Single Product Without Login', async () => {
+    test('Handle Get Single Product Without Login', async () => {
       const response = await endpoint.getProducts('', 1);
       expect(response.status).toEqual(401);
       expect(response.body).toBeValidSchema(schemaUser.accessDenied);
@@ -172,11 +172,18 @@ describe('PRODUCT SYNC', () => {
       expect(response.body.status).toEqual(200);
     });
 
-    test('Failed Get Single Product Number not Registered', async () => {
+    test('Handle Get Single Product Number not Registered', async () => {
       const response = await endpoint.getProduct(access_token, dataRequest.singleProdRandom);
       expect(response.status).toEqual(400);
       expect(response.body).toBeValidSchema(schema.productNotFound);
       expect(response.body).toEqual(bodyValidator.notFoundProduct);
+    });
+
+    test('Handle Import Products w/h Login', async () => {
+      const response = await endpoint.import('', dataRequest.idsToImport);
+      expect(response.status).toEqual(401);
+      expect(response.body).toEqual(bodyValidatorUser.accessDenied);
+      expect(response.body).toBeValidSchema(schemaUser.accessDenied);
     });
 
     test('Import Products With Login', async () => {
@@ -187,7 +194,7 @@ describe('PRODUCT SYNC', () => {
       expect(response.body.message).toEqual(bodyValidator.successImport.message);
     });
 
-    test('Failed Import Products Existing / Duplicate', async () => {
+    test('Handle Import Products Existing / Duplicate', async () => {
       const response = await endpoint.import(access_token, dataRequest.idsToImport);
       expect(response.status).toEqual(400);
       expect(response.body).toBeValidSchema(schemaUser.errorSchema);
