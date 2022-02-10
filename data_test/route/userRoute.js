@@ -19,7 +19,7 @@ const userLogin = (body) =>
 
 const verifyLogin = (token) =>
   api
-    .post('/auth')
+    .get('/auth')
     .set('Content-type', 'application/json')
     .set('Accept', 'application/json')
     .set('access_token', token)
@@ -27,7 +27,7 @@ const verifyLogin = (token) =>
 
 const userLogout = (token) =>
   api
-    .post('/auth')
+    .delete('/auth')
     .set('Content-type', 'application/json')
     .set('Accept', 'application/json')
     .set('access_token', token)

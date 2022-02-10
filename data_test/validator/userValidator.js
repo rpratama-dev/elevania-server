@@ -46,6 +46,34 @@ const dataLoginValid = {
   message: 'Login Success',
 };
 
+const verifiedUser = {
+  response: {
+    id: 1,
+    full_name: 'riyan',
+    email: 'riyan@mail.com',
+    role: 'admin',
+    createdAt: '2022-02-10T00:15:26.857Z',
+    updatedAt: '2022-02-10T00:18:50.602Z',
+    is_login: 1,
+  },
+  status: 200,
+  message: 'Token is verified',
+};
+
+const logoutUser = {
+  response: {
+    id: 1,
+    full_name: 'riyan',
+    email: 'riyan@mail.com',
+    role: 'admin',
+    createdAt: '2022-02-10T00:33:31.570Z',
+    updatedAt: '2022-02-10T00:33:31.838Z',
+    is_login: 0,
+  },
+  status: 200,
+  message: 'Logout success',
+};
+
 module.exports = {
   invalidInput,
   dataRegister,
@@ -53,4 +81,6 @@ module.exports = {
   dataLoginBlank,
   dataLoginWrong,
   dataLoginValid,
+  verifiedUser,
+  logoutUser,
 };

@@ -6,7 +6,7 @@ const bodyValidator = require('../data_test/validator/userValidator');
 const dataRequest = require('../data_test/data_request/userData');
 
 expect.extend(matcher);
-
+let access_token = '';
 describe('Post Create User', () => {
   test('Data Register Blank', async () => {
     const response = await endpoint.userAdd(dataRequest.dataRegisterBlank);
@@ -79,5 +79,32 @@ describe('User Login', () => {
     expect(response.body.response.user).toEqual(bodyValidator.dataLoginValid.response.user);
     expect(response.body.status).toEqual(200);
     expect(response.body.message).toEqual('Login Success');
+    access_token = response.body.response.token;
+  });
+
+  test('Verify User', async () => {
+    const response = await endpoint.verifyLogin(access_token);
+    expect(response.status).toEqual(200);
+    expect(response.body).toBeValidSchema(schema.verifiedUser);
+    const { verifiedUser } = bodyValidator;
+    expect(response.body.response.full_name).toEqual(verifiedUser.response.full_name);
+    expect(response.body.response.email).toEqual(verifiedUser.response.email);
+    expect(response.body.response.role).toEqual(verifiedUser.response.role);
+    expect(response.body.response.is_login).toEqual(verifiedUser.response.is_login);
+    expect(response.body.status).toEqual(bodyValidator.verifiedUser.status);
+    expect(response.body.message).toEqual(bodyValidator.verifiedUser.message);
+  });
+
+  test('Logout User', async () => {
+    const response = await endpoint.userLogout(access_token);
+    expect(response.status).toEqual(200);
+    expect(response.body).toBeValidSchema(schema.verifiedUser);
+    const { logoutUser } = bodyValidator;
+    expect(response.body.response.full_name).toEqual(logoutUser.response.full_name);
+    expect(response.body.response.email).toEqual(logoutUser.response.email);
+    expect(response.body.response.role).toEqual(logoutUser.response.role);
+    expect(response.body.response.is_login).toEqual(logoutUser.response.is_login);
+    expect(response.body.status).toEqual(bodyValidator.logoutUser.status);
+    expect(response.body.message).toEqual(bodyValidator.logoutUser.message);
   });
 });
