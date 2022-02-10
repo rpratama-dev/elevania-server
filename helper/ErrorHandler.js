@@ -13,6 +13,9 @@ function errorHandler(err) {
     payload.status = err.response.status;
     payload.response = err.response.statusText;
   }
+  if (payload.status === 401) {
+    return Boom.unauthorized(payload.response);
+  }
   return Boom.badRequest(payload.response, payload);
 }
 
