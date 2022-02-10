@@ -82,7 +82,7 @@
   - ```./config/private.pem```
   - ```./config/public.pub```
 
-### Testing
+### TESTING
   - Buat Database Baru dengan nama `db_ecommerce_test`
   - Jalankan server dalam mode test ```yarn test```
   - Kemudian jalankan test aplikasi dengan perintah ```yarn test_app```
