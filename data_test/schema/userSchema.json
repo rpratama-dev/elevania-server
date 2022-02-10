@@ -1,0 +1,291 @@
+{
+  "errorSchema": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "statusCode": 400,
+        "error": "Bad Request",
+        "message": "Password not match"
+      }
+    ],
+    "required": ["statusCode", "error", "message"],
+    "properties": {
+      "statusCode": {
+        "$id": "#/properties/statusCode",
+        "type": "integer",
+        "title": "The statusCode schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [400]
+      },
+      "error": {
+        "$id": "#/properties/error",
+        "type": "string",
+        "title": "The error schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["Bad Request"]
+      },
+      "message": {
+        "$id": "#/properties/message",
+        "type": "string",
+        "title": "The message schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["Password not match"]
+      }
+    },
+    "additionalProperties": true
+  },
+  "registerSuccess": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "id": 1,
+        "full_name": "riyan",
+        "email": "riyan@mail.com",
+        "role": "admin",
+        "createdAt": "2022-02-09T23:46:32.715Z",
+        "updatedAt": "2022-02-09T23:46:32.715Z",
+        "is_login": 0
+      }
+    ],
+    "required": ["id", "full_name", "email", "role", "createdAt", "updatedAt", "is_login"],
+    "properties": {
+      "id": {
+        "$id": "#/properties/id",
+        "type": "integer",
+        "title": "The id schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [1]
+      },
+      "full_name": {
+        "$id": "#/properties/full_name",
+        "type": "string",
+        "title": "The full_name schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["riyan"]
+      },
+      "email": {
+        "$id": "#/properties/email",
+        "type": "string",
+        "title": "The email schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["riyan@mail.com"]
+      },
+      "role": {
+        "$id": "#/properties/role",
+        "type": "string",
+        "title": "The role schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["admin"]
+      },
+      "createdAt": {
+        "$id": "#/properties/createdAt",
+        "type": "string",
+        "title": "The createdAt schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["2022-02-09T23:46:32.715Z"]
+      },
+      "updatedAt": {
+        "$id": "#/properties/updatedAt",
+        "type": "string",
+        "title": "The updatedAt schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["2022-02-09T23:46:32.715Z"]
+      },
+      "is_login": {
+        "$id": "#/properties/is_login",
+        "type": "integer",
+        "title": "The is_login schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [0]
+      }
+    },
+    "additionalProperties": true
+  },
+  "duplicateUser": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "statusCode": 400,
+        "error": "Bad Request",
+        "message": "duplicate key value violates unique constraint \"Users_email_key\""
+      }
+    ],
+    "required": ["statusCode", "error", "message"],
+    "properties": {
+      "statusCode": {
+        "$id": "#/properties/statusCode",
+        "type": "integer",
+        "title": "The statusCode schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [400]
+      },
+      "error": {
+        "$id": "#/properties/error",
+        "type": "string",
+        "title": "The error schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["Bad Request"]
+      },
+      "message": {
+        "$id": "#/properties/message",
+        "type": "string",
+        "title": "The message schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["duplicate key value violates unique constraint \"Users_email_key\""]
+      }
+    },
+    "additionalProperties": true
+  },
+  "loginSuccess": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "response": {
+          "token": "eyJhbGciOiJSUzI1NiIsInR",
+          "user": {
+            "email": "riyan@mail.com",
+            "full_name": "riyan",
+            "is_login": 1,
+            "role": "admin"
+          }
+        },
+        "status": 200,
+        "message": "Login Success"
+      }
+    ],
+    "required": ["response", "status", "message"],
+    "properties": {
+      "response": {
+        "$id": "#/properties/response",
+        "type": "object",
+        "title": "The response schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": {},
+        "examples": [
+          {
+            "token": "eyJhbGciOiJSUzI1NiIsInR",
+            "user": {
+              "email": "riyan@mail.com",
+              "full_name": "riyan",
+              "is_login": 1,
+              "role": "admin"
+            }
+          }
+        ],
+        "required": ["token", "user"],
+        "properties": {
+          "token": {
+            "$id": "#/properties/response/properties/token",
+            "type": "string",
+            "title": "The token schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": ["eyJhbGciOiJSUzI1NiIsInR"]
+          },
+          "user": {
+            "$id": "#/properties/response/properties/user",
+            "type": "object",
+            "title": "The user schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+              {
+                "email": "riyan@mail.com",
+                "full_name": "riyan",
+                "is_login": 1,
+                "role": "admin"
+              }
+            ],
+            "required": ["email", "full_name", "is_login", "role"],
+            "properties": {
+              "email": {
+                "$id": "#/properties/response/properties/user/properties/email",
+                "type": "string",
+                "title": "The email schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": ["riyan@mail.com"]
+              },
+              "full_name": {
+                "$id": "#/properties/response/properties/user/properties/full_name",
+                "type": "string",
+                "title": "The full_name schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": ["riyan"]
+              },
+              "is_login": {
+                "$id": "#/properties/response/properties/user/properties/is_login",
+                "type": "integer",
+                "title": "The is_login schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": 0,
+                "examples": [1]
+              },
+              "role": {
+                "$id": "#/properties/response/properties/user/properties/role",
+                "type": "string",
+                "title": "The role schema",
+                "description": "An explanation about the purpose of this instance.",
+                "default": "",
+                "examples": ["admin"]
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      },
+      "status": {
+        "$id": "#/properties/status",
+        "type": "integer",
+        "title": "The status schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [200]
+      },
+      "message": {
+        "$id": "#/properties/message",
+        "type": "string",
+        "title": "The message schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["Login Success"]
+      }
+    },
+    "additionalProperties": true
+  }
+}
