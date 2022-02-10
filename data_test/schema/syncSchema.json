@@ -1,0 +1,463 @@
+{
+  "getProducts": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "response": [
+          {
+            "name": "Baseus Cable 1 Meter Micro USB",
+            "no": "26682888",
+            "sku": "BS010",
+            "price": "5000"
+          }
+        ],
+        "status": 200
+      }
+    ],
+    "required": ["response", "status"],
+    "properties": {
+      "response": {
+        "$id": "#/properties/response",
+        "type": "array",
+        "title": "The response schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": [],
+        "examples": [
+          [
+            {
+              "name": "Baseus Cable 1 Meter Micro USB",
+              "no": "26682888",
+              "sku": "BS010",
+              "price": "5000"
+            }
+          ]
+        ],
+        "additionalItems": true,
+        "items": {
+          "$id": "#/properties/response/items",
+          "anyOf": [
+            {
+              "$id": "#/properties/response/items/anyOf/0",
+              "type": "object",
+              "title": "The first anyOf schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": {},
+              "examples": [
+                {
+                  "name": "Baseus Cable 1 Meter Micro USB",
+                  "no": "26682888",
+                  "sku": "BS010",
+                  "price": "5000"
+                }
+              ],
+              "required": ["name", "no", "sku", "price"],
+              "properties": {
+                "name": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/name",
+                  "type": "string",
+                  "title": "The name schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["Baseus Cable 1 Meter Micro USB"]
+                },
+                "no": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/no",
+                  "type": "string",
+                  "title": "The no schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["26682888"]
+                },
+                "sku": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/sku",
+                  "type": "string",
+                  "title": "The sku schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["BS010"]
+                },
+                "price": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/price",
+                  "type": "string",
+                  "title": "The price schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["5000"]
+                }
+              },
+              "additionalProperties": true
+            }
+          ]
+        }
+      },
+      "status": {
+        "$id": "#/properties/status",
+        "type": "integer",
+        "title": "The status schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [200]
+      }
+    },
+    "additionalProperties": true
+  },
+  "getProduct": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "response": {
+          "htmlDetail": "<p><strong>Kaos Distro 3 Seconds</strong><br>\n<br>\nHarap konfirmasi ketersediaan barang sebelum pemesanan.</p>\n<ul>\n  <li>Size L</li>\n  <li>Warna Merah</li>\n</ul>",
+          "prdNm": "Kaos 3 Seconds Merah Size L",
+          "prdNo": "22645347",
+          "sellerPrdCd": "SKU-22645347",
+          "selPrc": "10000"
+        },
+        "status": 200
+      }
+    ],
+    "required": ["response", "status"],
+    "properties": {
+      "response": {
+        "$id": "#/properties/response",
+        "type": "object",
+        "title": "The response schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": {},
+        "examples": [
+          {
+            "htmlDetail": "<p><strong>Kaos Distro 3 Seconds</strong><br>\n<br>\nHarap konfirmasi ketersediaan barang sebelum pemesanan.</p>\n<ul>\n  <li>Size L</li>\n  <li>Warna Merah</li>\n</ul>",
+            "prdNm": "Kaos 3 Seconds Merah Size L",
+            "prdNo": "22645347",
+            "sellerPrdCd": "SKU-22645347",
+            "selPrc": "10000"
+          }
+        ],
+        "required": ["htmlDetail", "prdNm", "prdNo", "sellerPrdCd", "selPrc"],
+        "properties": {
+          "htmlDetail": {
+            "$id": "#/properties/response/properties/htmlDetail",
+            "type": "string",
+            "title": "The htmlDetail schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "<p><strong>Kaos Distro 3 Seconds</strong><br>\n<br>\nHarap konfirmasi ketersediaan barang sebelum pemesanan.</p>\n<ul>\n  <li>Size L</li>\n  <li>Warna Merah</li>\n</ul>"
+            ]
+          },
+          "prdNm": {
+            "$id": "#/properties/response/properties/prdNm",
+            "type": "string",
+            "title": "The prdNm schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": ["Kaos 3 Seconds Merah Size L"]
+          },
+          "prdNo": {
+            "$id": "#/properties/response/properties/prdNo",
+            "type": "string",
+            "title": "The prdNo schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": ["22645347"]
+          },
+          "sellerPrdCd": {
+            "$id": "#/properties/response/properties/sellerPrdCd",
+            "type": "string",
+            "title": "The sellerPrdCd schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": ["SKU-22645347"]
+          },
+          "selPrc": {
+            "$id": "#/properties/response/properties/selPrc",
+            "type": "string",
+            "title": "The selPrc schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": ["10000"]
+          }
+        },
+        "additionalProperties": true
+      },
+      "status": {
+        "$id": "#/properties/status",
+        "type": "integer",
+        "title": "The status schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [200]
+      }
+    },
+    "additionalProperties": true
+  },
+  "importSuccess": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "response": [
+          {
+            "id": 1,
+            "prod_no": "26682888",
+            "name": "Baseus Cable 1 Meter Micro USB",
+            "sku": "BS010",
+            "price": 5000,
+            "description": "<p>Baseus</p>",
+            "createdAt": "2022-02-10T01:43:52.652Z",
+            "updatedAt": "2022-02-10T01:43:52.652Z"
+          }
+        ],
+        "status": 200,
+        "message": "Berhasil Import Produk"
+      }
+    ],
+    "required": ["response", "status", "message"],
+    "properties": {
+      "response": {
+        "$id": "#/properties/response",
+        "type": "array",
+        "title": "The response schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": [],
+        "examples": [
+          [
+            {
+              "id": 1,
+              "prod_no": "26682888",
+              "name": "Baseus Cable 1 Meter Micro USB",
+              "sku": "BS010",
+              "price": 5000,
+              "description": "<p>Baseus</p>",
+              "createdAt": "2022-02-10T01:43:52.652Z",
+              "updatedAt": "2022-02-10T01:43:52.652Z"
+            }
+          ]
+        ],
+        "additionalItems": true,
+        "items": {
+          "$id": "#/properties/response/items",
+          "anyOf": [
+            {
+              "$id": "#/properties/response/items/anyOf/0",
+              "type": "object",
+              "title": "The first anyOf schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": {},
+              "examples": [
+                {
+                  "id": 1,
+                  "prod_no": "26682888",
+                  "name": "Baseus Cable 1 Meter Micro USB",
+                  "sku": "BS010",
+                  "price": 5000,
+                  "description": "<p>Baseus</p>",
+                  "createdAt": "2022-02-10T01:43:52.652Z",
+                  "updatedAt": "2022-02-10T01:43:52.652Z"
+                }
+              ],
+              "required": [
+                "id",
+                "prod_no",
+                "name",
+                "sku",
+                "price",
+                "description",
+                "createdAt",
+                "updatedAt"
+              ],
+              "properties": {
+                "id": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/id",
+                  "type": "integer",
+                  "title": "The id schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": 0,
+                  "examples": [1]
+                },
+                "prod_no": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/prod_no",
+                  "type": "string",
+                  "title": "The prod_no schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["26682888"]
+                },
+                "name": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/name",
+                  "type": "string",
+                  "title": "The name schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["Baseus Cable 1 Meter Micro USB"]
+                },
+                "sku": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/sku",
+                  "type": "string",
+                  "title": "The sku schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["BS010"]
+                },
+                "price": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/price",
+                  "type": "integer",
+                  "title": "The price schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": 0,
+                  "examples": [5000]
+                },
+                "description": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/description",
+                  "type": "string",
+                  "title": "The description schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["<p>Baseus</p>"]
+                },
+                "createdAt": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/createdAt",
+                  "type": "string",
+                  "title": "The createdAt schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["2022-02-10T01:43:52.652Z"]
+                },
+                "updatedAt": {
+                  "$id": "#/properties/response/items/anyOf/0/properties/updatedAt",
+                  "type": "string",
+                  "title": "The updatedAt schema",
+                  "description": "An explanation about the purpose of this instance.",
+                  "default": "",
+                  "examples": ["2022-02-10T01:43:52.652Z"]
+                }
+              },
+              "additionalProperties": true
+            }
+          ]
+        }
+      },
+      "status": {
+        "$id": "#/properties/status",
+        "type": "integer",
+        "title": "The status schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [200]
+      },
+      "message": {
+        "$id": "#/properties/message",
+        "type": "string",
+        "title": "The message schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["Berhasil Import Produk"]
+      }
+    },
+    "additionalProperties": true
+  },
+  "getImportedIDs": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "response": ["26682888", "28022841", "29325975"],
+        "status": 200
+      }
+    ],
+    "required": ["response", "status"],
+    "properties": {
+      "response": {
+        "$id": "#/properties/response",
+        "type": "array",
+        "title": "The response schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": [],
+        "examples": [["26682888", "28022841"]],
+        "additionalItems": true,
+        "items": {
+          "$id": "#/properties/response/items",
+          "anyOf": [
+            {
+              "$id": "#/properties/response/items/anyOf/0",
+              "type": "string",
+              "title": "The first anyOf schema",
+              "description": "An explanation about the purpose of this instance.",
+              "default": "",
+              "examples": ["26682888", "28022841"]
+            }
+          ]
+        }
+      },
+      "status": {
+        "$id": "#/properties/status",
+        "type": "integer",
+        "title": "The status schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [200]
+      }
+    },
+    "additionalProperties": true
+  },
+  "productNotFound": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "statusCode": 400,
+        "error": "Bad Request",
+        "message": "Product Not Found"
+      }
+    ],
+    "required": ["statusCode", "error", "message"],
+    "properties": {
+      "statusCode": {
+        "$id": "#/properties/statusCode",
+        "type": "integer",
+        "title": "The statusCode schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [400]
+      },
+      "error": {
+        "$id": "#/properties/error",
+        "type": "string",
+        "title": "The error schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["Bad Request"]
+      },
+      "message": {
+        "$id": "#/properties/message",
+        "type": "string",
+        "title": "The message schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["Product Not Found"]
+      }
+    },
+    "additionalProperties": true
+  }
+}

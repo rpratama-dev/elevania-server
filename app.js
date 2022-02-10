@@ -39,6 +39,7 @@ const init = async () => {
   routes(server);
   await client.connect();
   await server.start();
+  server.table().forEach((route) => console.log(`${route.method}\t${route.path}`));
   console.log('Server running on', server.info.uri);
 };
 

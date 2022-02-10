@@ -7,13 +7,13 @@ const CryptoPass = require('../utils/cryptoPass');
 class UserController {
   static async store(req, h) {
     try {
-      const { full_name, email, password, retype_password } = req.payload;
+      const { full_name, email, password, repeat_password } = req.payload;
       // TODO: Add Validation
-      if (password !== retype_password) throw customeError(400, 'Password Not Match');
+      if (password !== repeat_password) throw customeError(400, 'Password Not Match');
       const dateCreated = new Date();
       const hashPass = CryptoPass.hash(password); // Hash user password
       // Create payload user
-      const payload = { full_name, email, password: hashPass, role: 'admin' };
+      const payload = { full_name, email, password: hashPass, role: 'admin', is_login: 0 };
       const [result] = await UserService.create(payload);
       delete result.password;
       return { response: result, status: 201 };

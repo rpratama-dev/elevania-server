@@ -2,7 +2,6 @@ const config = {
   development: {
     username: 'postgres',
     password: 'root',
-    // use_env_variable: 'DB_URI',
     database: 'db_ecommerce',
     host: '127.0.0.1',
     dialect: 'postgres',
@@ -10,8 +9,7 @@ const config = {
   test: {
     username: 'postgres',
     password: 'root',
-    // use_env_variable: 'DB_URI',
-    database: 'db_ecommerce',
+    database: 'db_ecommerce_test',
     host: '127.0.0.1',
     dialect: 'postgres',
   },
