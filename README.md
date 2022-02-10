@@ -47,15 +47,31 @@
   - Buat Database ```db_ecommerce``` # Production
   - Buat Database ```db_ecommerce_test``` # Testing
   - Config Database ```./config/config.js```
+  - Sesuaikan Konfigurasi Berikut ini dengan database yang dibuat
   	```js
-    {
-      username: 'postgres',
-      password: 'root',
-      // use_env_variable: 'DB_URI',
-      database: 'db_ecommerce',
-      host: '127.0.0.1',
-      dialect: 'postgres',
-    }
+    const config = {
+      development: {
+        username: 'postgres',
+        password: 'root',
+        database: 'db_ecommerce',
+        host: '127.0.0.1',
+        dialect: 'postgres',
+      },
+      test: {
+        username: 'postgres',
+        password: 'root',
+        database: 'db_ecommerce_test',
+        host: '127.0.0.1',
+        dialect: 'postgres',
+      },
+      production: {
+        username: 'postgres',
+        password: 'root',
+        database: 'db_ecommerce',
+        host: '127.0.0.1',
+        dialect: 'postgres',
+      },
+    };
     ```
 
 ### ENVIRONTMENT: 
