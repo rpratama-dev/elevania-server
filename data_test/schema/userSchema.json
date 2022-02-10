@@ -408,5 +408,48 @@
       }
     },
     "additionalProperties": true
+  },
+  "accessDenied": {
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+      {
+        "statusCode": 401,
+        "error": "Unauthorized",
+        "message": "Access denied"
+      }
+    ],
+    "required": ["statusCode", "error", "message"],
+    "properties": {
+      "statusCode": {
+        "$id": "#/properties/statusCode",
+        "type": "integer",
+        "title": "The statusCode schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": 0,
+        "examples": [401]
+      },
+      "error": {
+        "$id": "#/properties/error",
+        "type": "string",
+        "title": "The error schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["Unauthorized"]
+      },
+      "message": {
+        "$id": "#/properties/message",
+        "type": "string",
+        "title": "The message schema",
+        "description": "An explanation about the purpose of this instance.",
+        "default": "",
+        "examples": ["Access denied"]
+      }
+    },
+    "additionalProperties": true
   }
 }

@@ -74,6 +74,12 @@ const logoutUser = {
   message: 'Logout success',
 };
 
+const accessDenied = {
+  statusCode: 401,
+  error: 'Unauthorized',
+  message: 'Access denied',
+};
+
 module.exports = {
   invalidInput,
   dataRegister,
@@ -83,4 +89,5 @@ module.exports = {
   dataLoginValid,
   verifiedUser,
   logoutUser,
+  accessDenied,
 };

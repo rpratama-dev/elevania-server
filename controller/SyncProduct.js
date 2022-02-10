@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const createHttpError = require('http-errors');
+const customeError = require('../helper/customeError');
 const errorHandler = require('../helper/ErrorHandler');
 const ContentService = require('../services/ContentService');
 const Elevania = require('../services/ElevaniaService');
@@ -28,8 +29,17 @@ class SyncProduct {
     try {
       const { id } = req.params;
       const product = await Elevania.findOne(id);
+      if (!product) throw customeError(400, 'Product Not Found');
+      const keys = ['htmlDetail', 'prdNm', 'prdNo', 'sellerPrdCd', 'selPrc'];
+      const newProduct = {};
+      keys.forEach((el) => {
+        newProduct[el] = product[el];
+        if (el === 'sellerPrdCd' && typeof product.sellerPrdCd !== 'string') {
+          newProduct[el] = `SKU-${product.prdNo}`;
+        }
+      });
       if (!product) throw createHttpError(404, 'Produk Tidak Ditemukan');
-      return { response: product, status: 200 };
+      return { response: newProduct, status: 200 };
     } catch (error) {
       return errorHandler(error);
     }
@@ -101,7 +111,7 @@ class SyncProduct {
       if (products.length > 0) response[0] = await ProductService.addManyProduct(products); // Create Many Product
       if (contents.length > 0) response[1] = await ContentService.addContent(contents); // Create Many Contents
       if (products.length < 1) throw createHttpError(400, 'All item is exist in databases');
-      return { response, status: 200, message: 'Berhasil Import Produk' };
+      return { response: response[0], status: 200, message: 'Berhasil Import Produk' };
     } catch (error) {
       return errorHandler(error);
     }
