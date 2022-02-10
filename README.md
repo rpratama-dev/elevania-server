@@ -100,6 +100,7 @@
 
 ### TESTING
   - Buat Database Baru dengan nama `db_ecommerce_test`
+  - Update Config Database untuk testing
   - Jalankan server dalam mode test ```yarn test```
   - Kemudian jalankan test aplikasi dengan perintah ```yarn test_app```
   - Database testing akan secara otomatis termigrasi
