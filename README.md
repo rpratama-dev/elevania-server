@@ -44,7 +44,8 @@
 
 ### DATABASE:
   - Sudah Install DB PostgreSQL
-  - Buat Database ```db_ecommerce```
+  - Buat Database ```db_ecommerce``` # Production
+  - Buat Database ```db_ecommerce_test``` # Testing
   - Config Database ```./config/config.js```
   	```js
     {
@@ -64,18 +65,28 @@
       ELEVANIA_API_KEY=xxx sesuaikan saja
       PORT=3000
       SALT=10
+      BASE_URL=http://localhost:3000/api/v1 ## Keperluan Testing
     ```
 
 ### MIGRATION: 
   - Setelah semua config dibuat jalankan migration
   - ```sequelize db:migrate```
+  - atau dengan perintah ```yarn migrate```
 
 ### START SERVER: 
   - Jalankan Perintah Beikut
-  - ```yarn start```
+  - ```yarn dev```    # Development
+  - ```yarn dev```    # Tesing
+  - ```yarn start```  # Production
   - Setelah Itu Pastikan ```Pair Key``` untuk JWT sudah tergenerate
   - ```./config/private.pem```
   - ```./config/public.pub```
+
+### Testing
+  - Buat Database Baru dengan nama `db_ecommerce_test`
+  - Jalankan server dalam mode test ```yarn test```
+  - Kemudian jalankan test aplikasi dengan perintah ```yarn test_app```
+  - Database testing akan secara otomatis termigrasi
 
 ### REGISTER ADMIN USER
   - Jalankan Request Untuk Register User
